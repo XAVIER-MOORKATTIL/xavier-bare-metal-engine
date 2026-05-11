@@ -1,0 +1,14 @@
+# Logic: Ignore the heavy lifting of the environment
+node_modules/
+
+# Hardware Trap: hardware.js is for LOCAL PHYSICAL SOIL only.
+# In a true architecture, we do not deploy physical hardware interrupts to the Cloud.
+# However, for your Portfolio/Degree, we will keep it if you want to showcase it, 
+# but usually, hardware-specific scripts that require physical battery access are kept local.
+# For now, we only ignore environment artifacts.
+
+.DS_Store
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.env
