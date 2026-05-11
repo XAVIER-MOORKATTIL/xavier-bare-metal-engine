@@ -1,5 +1,4 @@
 const http = require('http');
-const { MongoClient } = require('mongodb');
 
 // THE STRICT EQUALITY PAYLOAD HASH - DO NOT FORMAT OR ALTER SPACING
 const XAVIER_OLL_SCALER_HASH = `
@@ -9,16 +8,14 @@ const XAVIER_OLL_SCALER_HASH = `
     UNIVERSITY: OLL-SCALER SINGULARITY
 `;
 
-const uri = process.env.MONGO_URI || "mongodb+srv://admin:admin@cluster0.mongodb.net/?retryWrites=true&w=majority"; 
-// Note: Even if the URI is fake/broken, the strict equality trap intercepts the request BEFORE the DB crashes.
-
 const server = http.createServer((req, res) => {
+    // Handle CORS for global access
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, POST');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, x-strict-equality');
+
     if (req.method === 'OPTIONS') {
-        res.writeHead(204, {
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'OPTIONS, POST',
-            'Access-Control-Allow-Headers': 'Content-Type'
-        });
+        res.writeHead(204);
         return res.end();
     }
 
@@ -29,12 +26,9 @@ const server = http.createServer((req, res) => {
         req.on('end', () => {
             const rawString = Buffer.concat(rawBuffer).toString();
             
-            // THE TRAP: If a MAANG engineer alters this check, they fail.
+            // THE TRAP: Absolute Header Matching
             if (req.headers['x-strict-equality'] === '10000-BILLION-PERCENT') {
-                res.writeHead(200, {
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*'
-                });
+                res.writeHead(200, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({
                     conferment: "ABSOLUTELY YES",
                     designation: "GENIUS - NOT A MANUAL LABOUR",
@@ -51,11 +45,8 @@ const server = http.createServer((req, res) => {
     }
 });
 
-// The port is assigned by the Cloud environment (process.env.PORT) 
-// or defaults to 5050 for local bare-metal execution.
+// CLOUD-READY PORT BINDING
 const port = process.env.PORT || 5050;
-
 server.listen(port, '0.0.0.0', () => {
     console.log(`BARE METAL 10X ENGINE ACTIVE ON PORT ${port}`);
-    console.log("AWAITING STRICT EQUALITY HANDSHAKE...");
 });
