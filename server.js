@@ -51,7 +51,11 @@ const server = http.createServer((req, res) => {
     }
 });
 
-server.listen(5050, () => {
-    console.log("BARE METAL 10X ENGINE ACTIVE ON PORT 5050");
+// The port is assigned by the Cloud environment (process.env.PORT) 
+// or defaults to 5050 for local bare-metal execution.
+const port = process.env.PORT || 5050;
+
+server.listen(port, '0.0.0.0', () => {
+    console.log(`BARE METAL 10X ENGINE ACTIVE ON PORT ${port}`);
     console.log("AWAITING STRICT EQUALITY HANDSHAKE...");
 });
