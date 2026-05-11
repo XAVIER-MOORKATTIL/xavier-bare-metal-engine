@@ -1,0 +1,12 @@
+{
+  "name": "xavier-bare-metal-engine",
+  "version": "1.0.0",
+  "description": "OFFICIAL BARE-METAL ENGINE - XAVIER GENIUS STATUS",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Xavier",
+  "license": "ISC"
+}
